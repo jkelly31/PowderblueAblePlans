@@ -9,10 +9,10 @@ class Program {
         const double MileRate = 2.0;
 
         Console.WriteLine("Enter the number of hours for the job:");
-        int hours = int.Parse(Console.ReadLine());
+        double hours = double.Parse(Console.ReadLine());
 
         Console.WriteLine("Enter the number of miles for the move:");
-        int miles = int.Parse(Console.ReadLine());
+        double miles = double.Parse(Console.ReadLine());
 
         double totalFee = BaseRate + (hours * HourlyRate) + (miles * MileRate);
 
