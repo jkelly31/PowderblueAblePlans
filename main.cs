@@ -4,15 +4,19 @@ class Program {
 
       static void Main()
       {
-        const double CentimetersPerInch = 2.54;
-        
-        Console.WriteLine("Enter the measurement in inches:");
-        
-        double inches = double.Parse(Console.ReadLine()); // accept value from user
-        
-        double centimeters = inches * CentimetersPerInch;
-        
-        Console.WriteLine($"{centimeters} centimeters");
+        const double BaseRate = 200.0;
+        const double HourlyRate = 150.0;
+        const double MileRate = 2.0;
+
+        Console.WriteLine("Enter the number of hours for the job:");
+        int hours = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Enter the number of miles for the move:");
+        int miles = int.Parse(Console.ReadLine());
+
+        double totalFee = BaseRate + (hours * HourlyRate) + (miles * MileRate);
+
+        Console.WriteLine($"Total moving fee: ${totalFee:F2}");
       }
   }
 
