@@ -4,13 +4,15 @@ class Program {
 
       static void Main()
       {
-          const double CentimetersPerInch = 2.54;
-
-          double inches = 5; // Required Input: 5 inches
-
-          double centimeters = inches * CentimetersPerInch;
-
-          Console.WriteLine($"{centimeters} centimeters");
+        const double CentimetersPerInch = 2.54;
+        
+        Console.WriteLine("Enter the measurement in inches:");
+        
+        double inches = double.Parse(Console.ReadLine()); // accept value from user
+        
+        double centimeters = inches * CentimetersPerInch;
+        
+        Console.WriteLine($"{centimeters} centimeters");
       }
   }
 
