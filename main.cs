@@ -4,33 +4,72 @@ class Program
 {
     static void Main()
     {
-        Console.WriteLine("Enter a number to check if it's a perfect number:");
-        if (int.TryParse(Console.ReadLine(), out int inputNumber))
+        int salesD = 0, salesE = 0, salesF = 0;
+        int grandTotal = 0;
+
+        Console.WriteLine("Enter a salesperson initial (D, E, or F) or Z to finish:");
+
+        while (true)
         {
-            if (IsPerfect(inputNumber))
+            Console.Write("Salesperson initial: ");
+            char input = char.ToUpper(Console.ReadKey().KeyChar);
+            Console.WriteLine();
+
+            if (input == 'Z')
+                break;
+
+            if (input != 'D' && input != 'E' && input != 'F')
             {
-                Console.WriteLine("Perfect Number");
+                Console.WriteLine("Error, invalid salesperson selected, please try again.");
+                continue;
             }
-            else
+
+            Console.Write("Sale amount: ");
+            if (!int.TryParse(Console.ReadLine(), out int saleAmount))
             {
-                Console.WriteLine("Not A Perfect Number");
+                Console.WriteLine("Invalid input for sale amount. Please enter a valid number.");
+                continue;
             }
+
+            switch (input)
+            {
+                case 'D':
+                    salesD += saleAmount;
+                    break;
+                case 'E':
+                    salesE += saleAmount;
+                    break;
+                case 'F':
+                    salesF += saleAmount;
+                    break;
+            }
+
+            grandTotal += saleAmount;
         }
-    }
 
-    static bool IsPerfect(int number)
-    {
-        int sum = 0;
+        char highestSalesperson = ' ';
+        int highestTotal = 0;
 
-        // Calculate the sum of divisors
-        for (int i = 1; i <= number / 2; i++)
+        if (salesD > highestTotal)
         {
-            if (number % i == 0)
-            {
-                sum += i;
-            }
+            highestTotal = salesD;
+            highestSalesperson = 'D';
         }
+        if (salesE > highestTotal)
+        {
+            highestTotal = salesE;
+            highestSalesperson = 'E';
+        }
+        if (salesF > highestTotal)
+        {
+            highestTotal = salesF;
+            highestSalesperson = 'F';
+        }
+        string formattedGrandTotal = string.Format("{0:N0}", grandTotal);
 
-        return sum == number;
+        Console.WriteLine($"\nGrand Total: ${formattedGrandTotal}");
+        Console.WriteLine($"Highest Sale: {highestSalesperson}");
+
+        Console.ReadLine();
     }
 }
