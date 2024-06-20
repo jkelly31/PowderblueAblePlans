@@ -1,61 +1,67 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 class Program
 {
     static void Main()
     {
-        string[] salespersonNames = { "D", "E", "F" };
-        char[] allowedInitials = { 'D', 'E', 'F' };
-        int[] sales = new int[allowedInitials.Length];
-        int grandTotal = 0;
+        const int MinTemp = -30;
+        const int MaxTemp = 130;
+        const int NumDays = 5;
+        List<int> temperatures = new List<int>();
 
-        Console.WriteLine("Enter a salesperson initial (D, E, or F) or Z to finish:");
+        Console.WriteLine($"Please enter {NumDays} daily temperatures between {MinTemp} and {MaxTemp}:");
 
-        while (true)
+        for (int i = 0; i < NumDays; i++)
         {
-            Console.Write("Salesperson initial: ");
-            char input = char.ToUpper(Console.ReadKey().KeyChar);
-            Console.WriteLine();
-
-            if (input == 'Z')
-                break;
-
-            int index = Array.IndexOf(allowedInitials, input);
-
-            if (index == -1)
+            int temp;
+            while (true)
             {
-                Console.WriteLine("Error, invalid salesperson selected, please try again.");
-                continue;
+                Console.Write($"Temperature {i + 1}: ");
+                if (!int.TryParse(Console.ReadLine(), out temp) || temp < MinTemp || temp > MaxTemp)
+                {
+                    Console.WriteLine($"Temperature {temp} is invalid. Please enter a valid temperature between {MinTemp} and {MaxTemp}");
+                }
+                else
+                {
+                    break;
+                }
             }
-
-            Console.Write("Sale amount: ");
-            if (!int.TryParse(Console.ReadLine(), out int saleAmount))
-            {
-                Console.WriteLine("Invalid input for sale amount. Please enter a valid number.");
-                continue;
-            }
-
-            sales[index] += saleAmount;
-            grandTotal += saleAmount;
+            temperatures.Add(temp);
         }
 
-        int highestTotal = 0;
-        string highestSalesperson = "";
+        bool gettingWarmer = true;
+        bool gettingCooler = true;
 
-        for (int i = 0; i < sales.Length; i++)
+        for (int i = 1; i < temperatures.Count; i++)
         {
-            if (sales[i] > highestTotal)
+            if (temperatures[i] <= temperatures[i - 1])
             {
-                highestTotal = sales[i];
-                highestSalesperson = salespersonNames[i];
+                gettingWarmer = false;
+            }
+            if (temperatures[i] >= temperatures[i - 1])
+            {
+                gettingCooler = false;
             }
         }
 
-        string formattedGrandTotal = string.Format("{0:N0}", grandTotal);
+        if (gettingWarmer)
+        {
+            Console.WriteLine("Getting warmer");
+        }
+        else if (gettingCooler)
+        {
+            Console.WriteLine("Getting cooler");
+        }
+        else
+        {
+            Console.WriteLine("It's a mixed bag");
+        }
 
-        Console.WriteLine($"\nGrand Total: ${formattedGrandTotal}");
-        Console.WriteLine($"Highest Sale: {highestSalesperson}");
-
-        Console.ReadLine();
+        string tempList = string.Join(", ", temperatures);
+        double averageTemp = temperatures.Average();
+        Console.WriteLine($"5-day Temperature [{tempList}]");
+        Console.WriteLine($"Average Temperature is {averageTemp:F1} degrees");
     }
 }
