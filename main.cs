@@ -1,67 +1,89 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
-class Program
+namespace GreenvilleRevenue
 {
-    static void Main()
+    class Program
     {
-        const int MinTemp = -30;
-        const int MaxTemp = 130;
-        const int NumDays = 5;
-        List<int> temperatures = new List<int>();
-
-        Console.WriteLine($"Please enter {NumDays} daily temperatures between {MinTemp} and {MaxTemp}:");
-
-        for (int i = 0; i < NumDays; i++)
+        static void Main(string[] args)
         {
-            int temp;
-            while (true)
+            // display motto on load
+            DisplayMotto();
+            // show menu
+            ShowMenu();
+        }
+
+        // method to display motto
+        static void DisplayMotto()
+        {
+            Console.WriteLine("************************************");
+            Console.WriteLine("*  The stars shine in Greenville.  *");
+            Console.WriteLine("************************************");
+            Console.WriteLine();
+        }
+
+        // method to show menu
+        static void ShowMenu()
+        {
+            while (true) // loop to keep menu displayed until user exits
             {
-                Console.Write($"Temperature {i + 1}: ");
-                if (!int.TryParse(Console.ReadLine(), out temp) || temp < MinTemp || temp > MaxTemp)
+                Console.WriteLine("Please Enter the following number below from the following menu:");
+                Console.WriteLine("1. CALCULATE Greenville Revenue Year-Over-Year");
+                Console.WriteLine("2. Exit");
+
+                // user input
+                string input = Console.ReadLine();
+
+                // perform action based on input
+                switch (input)
                 {
-                    Console.WriteLine($"Temperature {temp} is invalid. Please enter a valid temperature between {MinTemp} and {MaxTemp}");
+                    case "1":
+                        // user selects option 1, calc revenue
+                        CalculateRevenue();
+                        break;
+                    case "2":
+                        // user selects option 2, exit the app
+                        ExitApp();
+                        return;
+                    default:
+                        // input is invalid, display error msg
+                        Console.WriteLine("Invalid selection, please try again.");
+                        break;
                 }
-                else
-                {
-                    break;
-                }
-            }
-            temperatures.Add(temp);
-        }
-
-        bool gettingWarmer = true;
-        bool gettingCooler = true;
-
-        for (int i = 1; i < temperatures.Count; i++)
-        {
-            if (temperatures[i] <= temperatures[i - 1])
-            {
-                gettingWarmer = false;
-            }
-            if (temperatures[i] >= temperatures[i - 1])
-            {
-                gettingCooler = false;
             }
         }
 
-        if (gettingWarmer)
+        // method to calc revenue based on num contestants
+        static void CalculateRevenue()
         {
-            Console.WriteLine("Getting warmer");
-        }
-        else if (gettingCooler)
-        {
-            Console.WriteLine("Getting cooler");
-        }
-        else
-        {
-            Console.WriteLine("It's a mixed bag");
+            // prompt user to enter num contestants in previous year
+            Console.WriteLine("Enter number of contestants in previous year:");
+            int lastYearContestants = int.Parse(Console.ReadLine());
+
+            // prompt user to enter num contestants in current year
+            Console.WriteLine("Enter number of contestants in current year:");
+            int currentYearContestants = int.Parse(Console.ReadLine());
+
+            // fee per contestant
+            const int feePerContestant = 25;
+            // calc expected revenue
+            int expectedRevenue = currentYearContestants * feePerContestant;
+
+            // display results
+            Console.WriteLine($"Last year's competition had {lastYearContestants} contestants, and this year's has {currentYearContestants} contestants");
+            Console.WriteLine($"Revenue expected this year is ${expectedRevenue.ToString("N0")}");
+            Console.WriteLine($"It is {(currentYearContestants > lastYearContestants ? "true" : "false")} that this year's competition is bigger than last year's.");
+            Console.WriteLine();
+
+            // display motto again
+            DisplayMotto();
         }
 
-        string tempList = string.Join(", ", temperatures);
-        double averageTemp = temperatures.Average();
-        Console.WriteLine($"5-day Temperature [{tempList}]");
-        Console.WriteLine($"Average Temperature is {averageTemp:F1} degrees");
+        // method to exit the app
+        static void ExitApp()
+        {
+            Console.WriteLine("Thank you for using the Greenville Revenue App, good-bye!");
+            // exit the app
+            Environment.Exit(0);
+        }
     }
 }
