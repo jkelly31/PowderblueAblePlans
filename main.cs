@@ -68,10 +68,21 @@ namespace GreenvilleRevenue
             // calc expected revenue
             int expectedRevenue = currentYearContestants * feePerContestant;
 
-            // display results
-            Console.WriteLine($"Last year's competition had {lastYearContestants} contestants, and this year's has {currentYearContestants} contestants");
-            Console.WriteLine($"Revenue expected this year is ${expectedRevenue.ToString("N0")}");
-            Console.WriteLine($"It is {(currentYearContestants > lastYearContestants ? "true" : "false")} that this year's competition is bigger than last year's.");
+            // calc and display appropriate message based on contestant comparison
+            if (currentYearContestants > 2 * lastYearContestants)
+            {
+                Console.WriteLine("The competition is more than twice as big this year!");
+            }
+            else if (currentYearContestants > lastYearContestants)
+            {
+                Console.WriteLine("The competition is bigger than ever!");
+            }
+            else
+            {
+                Console.WriteLine("A tighter race this year! Come out and cast your vote!");
+            }
+            // display results but not in this one
+            //Console.WriteLine($"Revenue expected this year is ${expectedRevenue.ToString("N0")}");
             Console.WriteLine();
 
             // display motto again
