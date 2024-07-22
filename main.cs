@@ -69,11 +69,11 @@ namespace GreenvilleRevenue
             int expectedRevenue = currentYearContestants * feePerContestant;
 
             // calc and display appropriate message based on contestant comparison
-            if (currentYearContestants > 2 * lastYearContestants)
+            if (currentYearContestants == 2 * lastYearContestants)
             {
                 Console.WriteLine("The competition is more than twice as big this year!");
             }
-            else if (currentYearContestants > lastYearContestants)
+            else if (currentYearContestants >= lastYearContestants)
             {
                 Console.WriteLine("The competition is bigger than ever!");
             }
@@ -87,6 +87,25 @@ namespace GreenvilleRevenue
 
             // display motto again
             DisplayMotto();
+        }
+
+        // new method added to get valid contestant number
+        static int GetValidContestantNumber(string prompt)
+        {
+            int number;
+            while (true)
+            {
+                Console.WriteLine(prompt);
+                if (int.TryParse(Console.ReadLine(), out number) && number >= 0 && number <= 30)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a number between 0 and 30.");
+                }
+            }
+            return number;
         }
 
         // method to exit the app
